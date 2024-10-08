@@ -25,7 +25,7 @@ export const styles = {
         large: 24
       }
     }
-  };
+  };s
   
   export const createScreenStyles = (theme) => ({
     container: {
