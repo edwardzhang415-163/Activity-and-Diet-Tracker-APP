@@ -39,22 +39,22 @@ const ItemsList = ({ items, type }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-  },
-  listContent: {
-    padding: styles.common.padding,
-  },
-  item: {
-    padding: styles.common.spacing.medium,
-    marginVertical: styles.common.spacing.small,
-    borderRadius: styles.common.borderRadius,
-  },
-  specialItem: {
-    borderWidth: 2,
-    borderColor: styles.lightMode.accentColor,
-  },
-});
+// const styles = StyleSheet.create({
+//   list: {
+//     flex: 1,
+//   },
+//   listContent: {
+//     padding: styles.common.padding,
+//   },
+//   item: {
+//     padding: styles.common.spacing.medium,
+//     marginVertical: styles.common.spacing.small,
+//     borderRadius: styles.common.borderRadius,
+//   },
+//   specialItem: {
+//     borderWidth: 2,
+//     borderColor: styles.lightMode.accentColor,
+//   },
+// });
 
 export default ItemsList;

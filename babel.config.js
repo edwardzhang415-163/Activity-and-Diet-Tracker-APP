@@ -8,15 +8,14 @@ module.exports = function(api) {
         {
           root: ['./src'],
           extensions: [
-            '.ios.ts',
-            '.android.ts',
-            '.ts',
-            '.ios.tsx',
-            '.android.tsx',
-            '.tsx',
-            '.jsx',
             '.js',
-            '.json',
+            '.jsx',
+            '.ts',
+            '.tsx',
+            '.android.js',
+            '.android.tsx',
+            '.ios.js',
+            '.ios.tsx',
           ],
           alias: {
             '@': './src',
