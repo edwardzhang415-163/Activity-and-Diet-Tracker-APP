@@ -1,47 +1,43 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { SelectList } from 'react-native-dropdown-select-list';
 import { useData } from '../context/DataContext';
 import { useTheme } from '../context/ThemeContext';
-import { createScreenStyles } from '../constants/styles';
+import { styles } from '../constants/styles';
 
-const activityTypes = [
-  { label: 'Walking', value: 'Walking' },
-  { label: 'Running', value: 'Running' },
-  { label: 'Swimming', value: 'Swimming' },
-  { label: 'Weights', value: 'Weights' },
-  { label: 'Yoga', value: 'Yoga' },
-  { label: 'Cycling', value: 'Cycling' },
-  { label: 'Hiking', value: 'Hiking' },
+const ACTIVITY_TYPES = [
+  { key: 'Walking', value: 'Walking' },
+  { key: 'Running', value: 'Running' },
+  { key: 'Swimming', value: 'Swimming' },
+  { key: 'Weights', value: 'Weights' },
+  { key: 'Yoga', value: 'Yoga' },
+  { key: 'Cycling', value: 'Cycling' },
+  { key: 'Hiking', value: 'Hiking' },
 ];
 
-const AddActivity = ({ navigation }) => {
+const AddActivityScreen = ({ navigation }) => {
   const { addActivity } = useData();
-  const theme = useTheme();
-  const screenStyles = createScreenStyles(theme);
-
-  const [type, setType] = useState(null);
+  const { backgroundColor, textColor } = useTheme();
+  
+  const [type, setType] = useState('');
   const [duration, setDuration] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const validateAndSave = () => {
     if (!type) {
       Alert.alert('Error', 'Please select an activity type');
       return;
     }
-
-    const durationNum = parseInt(duration);
-    if (isNaN(durationNum) || durationNum <= 0) {
+    if (!duration || isNaN(duration) || parseInt(duration) <= 0) {
       Alert.alert('Error', 'Please enter a valid duration');
       return;
     }
 
     addActivity({
       type,
-      duration: durationNum,
+      duration: parseInt(duration),
       date: date.toISOString(),
     });
 
@@ -49,34 +45,43 @@ const AddActivity = ({ navigation }) => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-      <Text style={[styles.label, { color: theme.textColor }]}>Activity Type</Text>
-      <DropDownPicker
-        open={dropdownOpen}
-        value={type}
-        items={activityTypes}
-        setOpen={setDropdownOpen}
-        setValue={setType}
-        style={[styles.dropdown, { backgroundColor: theme.backgroundColor }]}
-        textStyle={{ color: theme.textColor }}
-        theme={theme.isDarkMode ? "DARK" : "LIGHT"}
+    <View style={[styles.common.container, { backgroundColor }]}>
+      <Text style={[styles.common.label, { color: textColor }]}>Activity Type</Text>
+      <SelectList
+        setSelected={setType}
+        data={ACTIVITY_TYPES}
+        save="value"
+        placeholder="Select activity type"
+        boxStyles={{
+          borderColor: textColor,
+          backgroundColor: backgroundColor,
+          marginBottom: 16
+        }}
+        inputStyles={{ color: textColor }}
+        dropdownStyles={{
+          borderColor: textColor,
+          backgroundColor: backgroundColor
+        }}
+        dropdownTextStyles={{ color: textColor }}
+        search={false}
       />
 
-      <Text style={[styles.label, { color: theme.textColor }]}>Duration (minutes)</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Duration (minutes)</Text>
       <TextInput
-        style={[styles.input, { color: theme.textColor, borderColor: theme.textColor }]}
+        style={[styles.common.input, { color: textColor, borderColor: textColor }]}
         value={duration}
         onChangeText={setDuration}
         keyboardType="numeric"
         placeholder="Enter duration"
-        placeholderTextColor="gray"
+        placeholderTextColor={styles.colors.grey}
       />
 
-      <Text style={[styles.label, { color: theme.textColor }]}>Date</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Date</Text>
       <TouchableOpacity
-        style={[styles.input, { color: theme.textColor, borderColor: theme.textColor }]}
-        onPress={() => setShowDatePicker(true)}>
-        <Text style={{ color: theme.textColor }}>{date.toLocaleDateString()}</Text>
+        onPress={() => setShowDatePicker(true)}
+        style={[styles.common.input, { justifyContent: 'center' }]}
+      >
+        <Text style={{ color: textColor }}>{date.toLocaleDateString()}</Text>
       </TouchableOpacity>
 
       {showDatePicker && (
@@ -85,7 +90,7 @@ const AddActivity = ({ navigation }) => {
           mode="date"
           display="inline"
           onChange={(event, selectedDate) => {
-            setShowDatePicker(false);
+            setShowDatePicker(Platform.OS === 'ios');
             if (selectedDate) {
               setDate(selectedDate);
             }
@@ -93,66 +98,22 @@ const AddActivity = ({ navigation }) => {
         />
       )}
 
-      <View style={styles.buttonContainer}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
         <TouchableOpacity
-          style={[styles.button, styles.cancelButton]}
-          onPress={() => navigation.goBack()}>
-          <Text style={styles.buttonText}>Cancel</Text>
+          style={[styles.common.button, { backgroundColor: styles.colors.danger, flex: 1, marginRight: 8 }]}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={[styles.common.buttonText, { color: styles.colors.lightText }]}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, styles.saveButton]}
-          onPress={validateAndSave}>
-          <Text style={styles.buttonText}>Save</Text>
+          style={[styles.common.button, { backgroundColor: styles.colors.primary, flex: 1, marginLeft: 8 }]}
+          onPress={validateAndSave}
+        >
+          <Text style={[styles.common.buttonText, { color: styles.colors.lightText }]}>Save</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-    marginTop: 16,
-  },
-  input: {
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
-  },
-  dropdown: {
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 16,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 24,
-  },
-  button: {
-    flex: 1,
-    padding: 16,
-    borderRadius: 8,
-    marginHorizontal: 8,
-    alignItems: 'center',
-  },
-  cancelButton: {
-    backgroundColor: '#FF3B30',
-  },
-  saveButton: {
-    backgroundColor: '#34C759',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
-
-export default AddActivity;
+export default AddActivityScreen;
