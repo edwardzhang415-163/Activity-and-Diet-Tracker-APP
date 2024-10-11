@@ -12,6 +12,7 @@ export const styles = {
     lightText: '#FFFFFF',
     darkText: '#000000',
     grey: '#8E8E93',
+    ripple: 'rgba(0, 0, 0, 0.32)',
   },
   
   common: StyleSheet.create({
