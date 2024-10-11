@@ -8,7 +8,7 @@ export const styles = {
     danger: '#FF3B30',
     warning: '#FF9500',
     lightBackground: '#FFFFFF',
-    darkBackground: '#000000',
+    darkBackground: '#242424',
     lightText: '#FFFFFF',
     darkText: '#000000',
     grey: '#8E8E93',
