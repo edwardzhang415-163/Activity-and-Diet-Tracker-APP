@@ -13,15 +13,14 @@ const ActivitiesScreen = ({ navigation }) => {
     navigation.setOptions({
       headerRight: () => (
         <PressableButton
-        pressedFunction={() => alert('Button Pressed!')}
-        componentStyle={styles.button}
-        pressedStyle={styles.buttonPressed}
+        pressedFunction={() =>navigation.navigate('AddActivity')}
+        componentStyle={styles.colors.primary}
+        pressedStyle={styles.common.button}
       >
         <Ionicons 
           name="add"
           size={24}
           color={styles.colors.primary}
-          onPress={() => navigation.navigate('AddActivity')}
           style={{ marginRight: 16 }} />
       </PressableButton>
       ),
