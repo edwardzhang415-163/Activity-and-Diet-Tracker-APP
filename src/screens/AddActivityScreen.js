@@ -71,7 +71,7 @@ const AddActivityScreen = ({ navigation }) => {
         style={[styles.common.input, { color: textColor, borderColor: textColor }]}
         value={duration}
         onChangeText={setDuration}
-        keyboardType="numeric"
+        keyboardType='numbers-and-punctuation'
         placeholder="Enter duration"
         placeholderTextColor={styles.colors.grey}
       />
