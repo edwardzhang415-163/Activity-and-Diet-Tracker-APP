@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import ItemsList from '../components/ItemsList';
 import { useTheme } from '../context/ThemeContext';
 import { styles } from '../styles';
+import PressableButton from '../components/PressableButton';
 
 const ActivitiesScreen = ({ navigation }) => {
   const { backgroundColor } = useTheme();
@@ -11,13 +12,18 @@ const ActivitiesScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Ionicons
+        <PressableButton
+        pressedFunction={() => alert('Button Pressed!')}
+        componentStyle={styles.button}
+        pressedStyle={styles.buttonPressed}
+      >
+        <Ionicons 
           name="add"
           size={24}
           color={styles.colors.primary}
           onPress={() => navigation.navigate('AddActivity')}
-          style={{ marginRight: 16 }}
-        />
+          style={{ marginRight: 16 }} />
+      </PressableButton>
       ),
     });
   }, [navigation]);
