@@ -49,7 +49,7 @@ const AddDietEntryScreen = ({ navigation }) => {
         style={[styles.common.input, { color: textColor, borderColor: textColor }]}
         value={calories}
         onChangeText={setCalories}
-        keyboardType="numeric"
+        keyboardType="numbers-and-punctuation"
         placeholder="Enter calories"
         placeholderTextColor={styles.colors.grey}
       />

@@ -12,6 +12,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import EditActivityScreen from '../screens/EditActivityScreen'; 
 import { useTheme } from '../context/ThemeContext';
 import { styles } from '../styles';
+import EditDietEntryScreen from '../screens/EditDietEntryScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -77,8 +78,13 @@ const AppNavigator = () => {
         />
         <Stack.Screen 
           name="EditActivity" 
-          component={EditActivityScreen} // 添加 EditActivity 屏幕
+          component={EditActivityScreen} 
           options={{ title: 'Edit Activity' }}
+        />
+        <Stack.Screen 
+          name="EditDiet" 
+          component={EditDietEntryScreen} 
+          options={{ title: 'Edit Diet' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
