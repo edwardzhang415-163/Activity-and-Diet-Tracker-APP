@@ -89,9 +89,9 @@ const EditDietEntryScreen = ({ route, navigation }) => {
         placeholderTextColor={styles.colors.grey}
       />
 
-      <Text style={[styles.common.label, { color: textColor }]}>Date *</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Date</Text>
       <TouchableOpacity
-        onPress={() => setShowDatePicker(true)}
+        onPress={() => setShowDatePicker(!showDatePicker)}
         style={[styles.common.input, { justifyContent: 'center' }]}
       >
         <Text style={{ color: textColor }}>{date.toLocaleDateString()}</Text>
@@ -103,9 +103,10 @@ const EditDietEntryScreen = ({ route, navigation }) => {
           mode="date"
           display="inline"
           onChange={(event, selectedDate) => {
-            setShowDatePicker(Platform.OS === 'ios');
+            setShowDatePicker();
             if (selectedDate) {
               setDate(selectedDate);
+              setShowDatePicker(false)
             }
           }}
         />

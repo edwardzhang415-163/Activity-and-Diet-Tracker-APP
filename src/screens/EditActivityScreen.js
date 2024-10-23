@@ -126,7 +126,7 @@ const EditActivityScreen = ({ route, navigation }) => {
 
       <Text style={[styles.common.label, { color: textColor }]}>Date *</Text>
       <TouchableOpacity
-        onPress={() => setShowDatePicker(true)}
+        onPress={() => setShowDatePicker(!showDatePicker)}
         style={[styles.common.input, { justifyContent: 'center' }]}
       >
         <Text style={{ color: textColor }}>{date.toLocaleDateString()}</Text>
@@ -138,9 +138,10 @@ const EditActivityScreen = ({ route, navigation }) => {
           mode="date"
           display="inline"
           onChange={(event, selectedDate) => {
-            setShowDatePicker(Platform.OS === 'ios');
+            setShowDatePicker();
             if (selectedDate) {
               setDate(selectedDate);
+              setShowDatePicker(false)
             }
           }}
         />

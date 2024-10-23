@@ -2,14 +2,22 @@ import React from 'react';
 import { Pressable, View } from 'react-native';
 import {styles} from '../styles';
 
-export default function PressableButton({ children, onPress, componentStyle, pressedStyle }) {
+import React from 'react';
+import { Pressable, View } from 'react-native';
+import { styles } from '../styles';
+
+export default function PressableButton({ children, onPress, Style }) {
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => (pressed ? [componentStyle, pressedStyle] : componentStyle)}
+      style={({ pressed }) => [
+        Style,
+        { opacity: pressed ? 0.6 : 1 }, // Change opacity when pressed
+      ]}
       android_ripple={{ color: styles.colors.ripple, borderless: false }}
     >
       <View>{children}</View>
     </Pressable>
   );
 }
+
