@@ -56,7 +56,7 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor },
+          headerStyle: { backgroundColor: headerColor  },
           headerTintColor: textColor,
         }}
       >

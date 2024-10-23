@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SelectList } from 'react-native-dropdown-select-list';
-import Customcheckbox from '../components/Customcheckbox'; 
+import Checkbox from 'expo-checkbox';
 import { Ionicons } from '@expo/vector-icons';
 import { useData } from '../context/DataContext';
 import { useTheme } from '../context/ThemeContext';
@@ -97,6 +97,7 @@ const EditActivityScreen = ({ route, navigation }) => {
     <View style={[styles.common.container, { backgroundColor }]}>
       <Text style={[styles.common.label, { color: textColor }]}>Activity Type</Text>
       <SelectList
+        placeholder={type}
         data={ACTIVITY_TYPES}
         setSelected={setType}
         boxStyles={{
@@ -151,9 +152,9 @@ const EditActivityScreen = ({ route, navigation }) => {
         This item is marked as special. Select the
         checkbox if you would lke to approve it.
           </Text>
-          <Customcheckbox
-            isChecked={isSpecial}
-            onPress={() => setIsSpecial(!isSpecial)}
+          <Checkbox
+            value={isSpecial}
+            onValueChange={() => setIsSpecial(!isSpecial)}
             color={styles.colors.primary}
           />
         </View>
