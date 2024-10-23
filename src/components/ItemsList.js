@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useData } from '../context/DataHelper';
 import { styles } from '../styles';
+import PressableButton from './PressableButton';
 
 const ItemsList = ({ type }) => {
   const navigation = useNavigation();
@@ -18,7 +19,7 @@ const ItemsList = ({ type }) => {
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity 
+    <PressableButton 
       onPress={() => handlePress(item)}
       style={[
         styles.common.listItem, 
@@ -57,7 +58,7 @@ const ItemsList = ({ type }) => {
           <Text style={localStyles.specialText}>Special</Text>
         </View>
       )}
-    </TouchableOpacity>
+    </PressableButton>
   );
 
   return (
