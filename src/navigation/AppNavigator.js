@@ -27,9 +27,9 @@ const TabNavigator = () => {
           let iconName;
 
           if (route.name === 'Activities') {
-            iconName = focused ? 'fitness' : 'fitness-outline';
+            iconName = focused ? 'bicycle' : 'bicycle-outline';
           } else if (route.name === 'Diet') {
-            iconName = focused ? 'restaurant' : 'restaurant-outline';
+            iconName = focused ? 'fast-food' : 'fast-food-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
           }
