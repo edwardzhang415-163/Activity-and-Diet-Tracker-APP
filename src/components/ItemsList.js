@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
-import { useData } from '../context/DataContext';
+import { useData } from '../context/DataHelper';
 import { styles } from '../styles';
 
 const ItemsList = ({ type }) => {
