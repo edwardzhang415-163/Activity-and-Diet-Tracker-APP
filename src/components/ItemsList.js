@@ -1,17 +1,25 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 import { useData } from '../context/DataContext';
 import { styles } from '../styles';
 
 const ItemsList = ({ type }) => {
+  const navigation = useNavigation();
   const { backgroundColor, textColor } = useTheme();
   const { activities, dietEntries } = useData();
 
   const data = type === 'activities' ? activities : dietEntries;
 
+  const handlePress = (item) => {
+    const screenName = type === 'activities' ? 'EditActivity' : 'EditDiet';
+    navigation.navigate(screenName, { item });
+  };
+
   const renderItem = ({ item }) => (
-    <View 
+    <TouchableOpacity 
+      onPress={() => handlePress(item)}
       style={[
         styles.common.listItem, 
         { 
@@ -49,7 +57,7 @@ const ItemsList = ({ type }) => {
           <Text style={localStyles.specialText}>Special</Text>
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 
   return (
