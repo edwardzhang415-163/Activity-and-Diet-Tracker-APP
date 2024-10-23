@@ -21,9 +21,7 @@ This is a React Native application for tracking activities and diet entries. Bef
 2. Install the dependencies:
     ```sh
     npm install
-    # or
-    yarn install
-    ```
+    
 
 3. Configure Firebase:
     - Create a new Firebase project in the [Firebase Console](https://console.firebase.google.com/).
