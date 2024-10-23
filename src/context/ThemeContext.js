@@ -7,6 +7,7 @@ export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const theme = {
+    headerColor: isDarkMode ? styles.colors.darkHeader : styles.colors.lightHeader,
     backgroundColor: isDarkMode ? styles.colors.darkBackground : styles.colors.lightBackground,
     textColor: isDarkMode ? styles.colors.lightText : styles.colors.darkText,
     isDarkMode,

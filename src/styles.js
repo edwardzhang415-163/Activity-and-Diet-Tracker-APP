@@ -13,6 +13,8 @@ export const styles = {
     darkText: '#000000',
     grey: '#8E8E93',
     ripple: 'rgba(0, 0, 0, 0.32)',
+    lightHeader: '#d5d8df',
+    darkHeader: '#181818',
   },
   
   common: StyleSheet.create({

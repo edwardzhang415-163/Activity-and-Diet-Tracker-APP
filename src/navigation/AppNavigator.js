@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  const { backgroundColor, textColor } = useTheme();
+  const { backgroundColor, textColor, headerColor } = useTheme();
 
   return (
     <Tab.Navigator
@@ -36,8 +36,8 @@ const TabNavigator = () => {
         },
         tabBarActiveTintColor: styles.colors.primary,
         tabBarInactiveTintColor: styles.colors.grey,
-        tabBarStyle: { backgroundColor },
-        headerStyle: { backgroundColor },
+        tabBarStyle: { backgroundColor: headerColor },
+        headerStyle: { backgroundColor: headerColor },
         headerTintColor: textColor,
       })}
     >
@@ -49,7 +49,7 @@ const TabNavigator = () => {
 };
 
 const AppNavigator = () => {
-  const { backgroundColor, textColor } = useTheme();
+  const { backgroundColor, textColor, headerColor } = useTheme();
 
   return (
     <NavigationContainer>
