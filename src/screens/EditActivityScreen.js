@@ -95,7 +95,7 @@ const EditActivityScreen = ({ route, navigation }) => {
 
   return (
     <View style={[styles.common.container, { backgroundColor }]}>
-      <Text style={[styles.common.label, { color: textColor }]}>Activity Type</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Activity *</Text>
       <SelectList
         placeholder={type}
         data={ACTIVITY_TYPES}
@@ -114,7 +114,7 @@ const EditActivityScreen = ({ route, navigation }) => {
         search={false}
       />
 
-      <Text style={[styles.common.label, { color: textColor }]}>Duration (minutes)</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Duration (min) *</Text>
       <TextInput
         style={[styles.common.input, { color: textColor, borderColor: textColor }]}
         value={duration}
@@ -124,7 +124,7 @@ const EditActivityScreen = ({ route, navigation }) => {
         placeholderTextColor={styles.colors.grey}
       />
 
-      <Text style={[styles.common.label, { color: textColor }]}>Date</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Date *</Text>
       <TouchableOpacity
         onPress={() => setShowDatePicker(true)}
         style={[styles.common.input, { justifyContent: 'center' }]}

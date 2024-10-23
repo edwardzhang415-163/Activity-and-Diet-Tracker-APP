@@ -35,7 +35,7 @@ const AddDietEntryScreen = ({ navigation }) => {
 
   return (
     <View style={[styles.common.container, { backgroundColor }]}>
-      <Text style={[styles.common.label, { color: textColor }]}>Description</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Description *</Text>
       <TextInput
         style={[styles.common.input, { color: textColor, borderColor: textColor, height: 100 }]}
         value={description}
@@ -46,7 +46,7 @@ const AddDietEntryScreen = ({ navigation }) => {
         numberOfLines={4}
       />
 
-      <Text style={[styles.common.label, { color: textColor }]}>Calories</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Calories *</Text>
       <TextInput
         style={[styles.common.input, { color: textColor, borderColor: textColor }]}
         value={calories}
@@ -56,7 +56,7 @@ const AddDietEntryScreen = ({ navigation }) => {
         placeholderTextColor={styles.colors.grey}
       />
 
-      <Text style={[styles.common.label, { color: textColor }]}>Date</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Date *</Text>
       <TouchableOpacity
         onPress={() => setShowDatePicker(true)}
         style={[styles.common.input, { justifyContent: 'center' }]}

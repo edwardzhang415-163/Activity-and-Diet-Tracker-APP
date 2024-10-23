@@ -5,6 +5,7 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import { useData } from '../context/DataContext';
 import { useTheme } from '../context/ThemeContext';
 import { styles } from '../styles';
+import PressableButton from '../components/PressableButton';
 
 const ACTIVITY_TYPES = [
   { key: 'Walking', value: 'Walking' },
@@ -46,7 +47,7 @@ const AddActivityScreen = ({ navigation }) => {
 
   return (
     <View style={[styles.common.container, { backgroundColor }]}>
-      <Text style={[styles.common.label, { color: textColor }]}>Activity Type</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Activity *</Text>
       <SelectList
         setSelected={setType}
         data={ACTIVITY_TYPES}
@@ -66,7 +67,7 @@ const AddActivityScreen = ({ navigation }) => {
         search={false}
       />
 
-      <Text style={[styles.common.label, { color: textColor }]}>Duration (minutes)</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Duration (min) *</Text>
       <TextInput
         style={[styles.common.input, { color: textColor, borderColor: textColor }]}
         value={duration}
@@ -76,9 +77,9 @@ const AddActivityScreen = ({ navigation }) => {
         placeholderTextColor={styles.colors.grey}
       />
 
-      <Text style={[styles.common.label, { color: textColor }]}>Date</Text>
+      <Text style={[styles.common.label, { color: textColor }]}>Date *</Text>
       <TouchableOpacity
-        onPress={() => setShowDatePicker(true)}
+        onPress={() => setShowDatePicker(!showDatePicker)}
         style={[styles.common.input, { justifyContent: 'center' }]}
       >
         <Text style={{ color: textColor }}>{date.toLocaleDateString()}</Text>
@@ -90,9 +91,10 @@ const AddActivityScreen = ({ navigation }) => {
           mode="date"
           display="inline"
           onChange={(event, selectedDate) => {
-            setShowDatePicker(Platform.OS === 'ios');
+            setShowDatePicker();
             if (selectedDate) {
               setDate(selectedDate);
+              setShowDatePicker(false)
             }
           }}
         />

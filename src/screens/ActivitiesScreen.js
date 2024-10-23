@@ -14,7 +14,7 @@ const ActivitiesScreen = ({ navigation }) => {
       headerRight: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <PressableButton
-        pressedFunction={() =>navigation.navigate('AddActivity')}
+        onPress={() =>navigation.navigate('AddActivity')}
         componentStyle={styles.colors.primary}
         pressedStyle={styles.common.button}
       >
