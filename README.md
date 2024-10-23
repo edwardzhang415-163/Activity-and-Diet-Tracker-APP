@@ -1,1 +1,0 @@
-# Activity-and-Diet-Tracker-APP
