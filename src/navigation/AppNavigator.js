@@ -9,6 +9,7 @@ import DietScreen from '../screens/DietScreen';
 import AddActivityScreen from '../screens/AddActivityScreen';
 import AddDietEntryScreen from '../screens/AddDietEntryScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import EditActivityScreen from '../screens/EditActivityScreen'; 
 import { useTheme } from '../context/ThemeContext';
 import { styles } from '../styles';
 
@@ -73,6 +74,11 @@ const AppNavigator = () => {
           name="AddDietEntry" 
           component={AddDietEntryScreen}
           options={{ title: 'Add A Diet Entry' }}
+        />
+        <Stack.Screen 
+          name="EditActivity" 
+          component={EditActivityScreen} // 添加 EditActivity 屏幕
+          options={{ title: 'Edit Activity' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
