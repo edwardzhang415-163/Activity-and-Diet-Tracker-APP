@@ -18,7 +18,7 @@ export const DataProvider = ({ children }) => {
   const [dietEntries, setDietEntries] = useState([]);
 
   useEffect(() => {
-    // Subscribe to activities collection
+   
     const activitiesQuery = query(collection(db, 'activities'), orderBy('date', 'desc'));
     const unsubscribeActivities = onSnapshot(activitiesQuery, (snapshot) => {
       const activitiesData = snapshot.docs.map(doc => ({
@@ -26,9 +26,11 @@ export const DataProvider = ({ children }) => {
         ...doc.data()
       }));
       setActivities(activitiesData);
+    }, (error) => {
+      console.error('Error fetching activities:', error);
     });
 
-    // Subscribe to diet entries collection
+   
     const dietQuery = query(collection(db, 'diet'), orderBy('date', 'desc'));
     const unsubscribeDiet = onSnapshot(dietQuery, (snapshot) => {
       const dietData = snapshot.docs.map(doc => ({
@@ -36,6 +38,8 @@ export const DataProvider = ({ children }) => {
         ...doc.data()
       }));
       setDietEntries(dietData);
+    }, (error) => {
+      console.error('Error fetching diet entries:', error);
     });
 
     return () => {
@@ -55,6 +59,7 @@ export const DataProvider = ({ children }) => {
       });
     } catch (error) {
       console.error('Error adding activity:', error);
+      alert('Failed to add activity. Please try again.');
     }
   };
 
@@ -68,6 +73,7 @@ export const DataProvider = ({ children }) => {
       });
     } catch (error) {
       console.error('Error adding diet entry:', error);
+      alert('Failed to add diet entry. Please try again.');
     }
   };
 
@@ -77,6 +83,7 @@ export const DataProvider = ({ children }) => {
       await updateDoc(docRef, activity);
     } catch (error) {
       console.error('Error updating activity:', error);
+      alert('Failed to update activity. Please try again.');
     }
   };
 
@@ -86,6 +93,7 @@ export const DataProvider = ({ children }) => {
       await updateDoc(docRef, entry);
     } catch (error) {
       console.error('Error updating diet entry:', error);
+      alert('Failed to update diet entry. Please try again.');
     }
   };
 
@@ -95,6 +103,7 @@ export const DataProvider = ({ children }) => {
       await deleteDoc(docRef);
     } catch (error) {
       console.error('Error deleting activity:', error);
+      alert('Failed to delete activity. Please try again.');
     }
   };
 
@@ -104,6 +113,7 @@ export const DataProvider = ({ children }) => {
       await deleteDoc(docRef);
     } catch (error) {
       console.error('Error deleting diet entry:', error);
+      alert('Failed to delete diet entry. Please try again.');
     }
   };
 

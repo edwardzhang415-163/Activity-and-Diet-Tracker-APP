@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, Platform } from 'react-native';
+import { View, Text, TextInput, Alert, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Checkbox from 'expo-checkbox';
@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useData } from '../context/DataHelper';
 import { useTheme } from '../context/ThemeContext';
 import { styles } from '../styles';
+import PressableButton from '../components/PressableButton';
 
 const ACTIVITY_TYPES = [
   { label: 'Walking', value: 'Walking' },
@@ -125,12 +126,12 @@ const EditActivityScreen = ({ route, navigation }) => {
       />
 
       <Text style={[styles.common.label, { color: textColor }]}>Date *</Text>
-      <TouchableOpacity
+      <PressableButton
         onPress={() => setShowDatePicker(!showDatePicker)}
         style={[styles.common.input, { justifyContent: 'center' }]}
       >
         <Text style={{ color: textColor }}>{date.toLocaleDateString()}</Text>
-      </TouchableOpacity>
+      </PressableButton>
 
       {showDatePicker && (
         <DateTimePicker
@@ -162,18 +163,18 @@ const EditActivityScreen = ({ route, navigation }) => {
       )}
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-        <TouchableOpacity
+        <PressableButton
           style={[styles.common.button, { backgroundColor: styles.colors.danger, flex: 1, marginRight: 8 }]}
           onPress={() => navigation.goBack()}
         >
           <Text style={[styles.common.buttonText, { color: styles.colors.lightText }]}>Cancel</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </PressableButton>
+        <PressableButton
           style={[styles.common.button, { backgroundColor: styles.colors.primary, flex: 1, marginLeft: 8 }]}
           onPress={handleUpdate}
         >
           <Text style={[styles.common.buttonText, { color: styles.colors.lightText }]}>Save</Text>
-        </TouchableOpacity>
+        </PressableButton>
       </View>
     </View>
   );
