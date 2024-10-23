@@ -12,17 +12,24 @@ const ActivitiesScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <PressableButton
-        pressedFunction={() =>navigation.navigate('AddActivity')}
-        componentStyle={styles.colors.primary}
-        pressedStyle={styles.common.button}
+        onPress={() =>navigation.navigate('AddActivity')}
+        style={styles.colors.primary}
+        
       >
         <Ionicons 
           name="add"
           size={24}
           color={styles.colors.primary}
-          style={{ marginRight: 16 }} />
+          style={{ marginRight: 6 }} />
       </PressableButton>
+      <Ionicons 
+            name="bicycle-outline"
+            size={24}
+            color={styles.colors.primary}
+            style={{ marginRight: 16 }} />
+      </View>
       ),
     });
   }, [navigation]);

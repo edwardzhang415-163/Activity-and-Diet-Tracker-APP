@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { ThemeProvider } from './src/context/ThemeContext';
-import { DataProvider } from './src/context/DataContext';
+import { DataProvider } from './src/context/DataHelper';
 import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {

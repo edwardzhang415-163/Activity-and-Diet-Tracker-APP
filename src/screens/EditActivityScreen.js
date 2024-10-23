@@ -2,31 +2,68 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Alert, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SelectList } from 'react-native-dropdown-select-list';
+import Checkbox from 'expo-checkbox';
+import { Ionicons } from '@expo/vector-icons';
 import { useData } from '../context/DataHelper';
 import { useTheme } from '../context/ThemeContext';
 import { styles } from '../styles';
 import PressableButton from '../components/PressableButton';
 
 const ACTIVITY_TYPES = [
-  { key: 'Walking', value: 'Walking' },
-  { key: 'Running', value: 'Running' },
-  { key: 'Swimming', value: 'Swimming' },
-  { key: 'Weights', value: 'Weights' },
-  { key: 'Yoga', value: 'Yoga' },
-  { key: 'Cycling', value: 'Cycling' },
-  { key: 'Hiking', value: 'Hiking' },
+  { label: 'Walking', value: 'Walking' },
+  { label: 'Running', value: 'Running' },
+  { label: 'Swimming', value: 'Swimming' },
+  { label: 'Weights', value: 'Weights' },
+  { label: 'Yoga', value: 'Yoga' },
+  { label: 'Cycling', value: 'Cycling' },
+  { label: 'Hiking', value: 'Hiking' },
 ];
 
-const AddActivityScreen = ({ navigation }) => {
-  const { addActivity } = useData();
+const EditActivityScreen = ({ route, navigation }) => {
+  const { item } = route.params;
+  const { updateActivity, deleteActivity } = useData();
   const { backgroundColor, textColor } = useTheme();
   
-  const [type, setType] = useState('');
-  const [duration, setDuration] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [type, setType] = useState(item.type);
+  const [duration, setDuration] = useState(item.duration.toString());
+  const [date, setDate] = useState(new Date(item.date));
+  const [isSpecial, setIsSpecial] = useState(item.isSpecial);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const validateAndSave = () => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Ionicons
+          name="trash-outline"
+          size={24}
+          color={styles.colors.danger}
+          onPress={handleDelete}
+          style={{ marginRight: 16 }}
+        />
+      ),
+    });
+  }, [navigation]);
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete Activity",
+      "Are you sure you want to delete this activity?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Delete", 
+          style: "destructive",
+          onPress: async () => {
+            await deleteActivity(item.id);
+            navigation.goBack();
+          }
+        }
+      ]
+    );
+  };
+
+  const handleUpdate = () => {
     if (!type) {
       Alert.alert('Error', 'Please select an activity type');
       return;
@@ -36,23 +73,34 @@ const AddActivityScreen = ({ navigation }) => {
       return;
     }
 
-    addActivity({
-      type,
-      duration: parseInt(duration),
-      date: date.toISOString(),
-    });
-
-    navigation.goBack();
+    Alert.alert(
+      "Update Activity",
+      "Are you sure you want to update this activity?",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Update",
+          onPress: async () => {
+            await updateActivity(item.id, {
+              type,
+              duration: parseInt(duration),
+              date: date.toISOString(),
+              isSpecial: isSpecial
+            });
+            navigation.goBack();
+          }
+        }
+      ]
+    );
   };
 
   return (
     <View style={[styles.common.container, { backgroundColor }]}>
       <Text style={[styles.common.label, { color: textColor }]}>Activity *</Text>
       <SelectList
-        setSelected={setType}
+        placeholder={type}
         data={ACTIVITY_TYPES}
-        save="value"
-        placeholder="Select activity type"
+        setSelected={setType}
         boxStyles={{
           borderColor: textColor,
           backgroundColor: backgroundColor,
@@ -72,7 +120,7 @@ const AddActivityScreen = ({ navigation }) => {
         style={[styles.common.input, { color: textColor, borderColor: textColor }]}
         value={duration}
         onChangeText={setDuration}
-        keyboardType='numbers-and-punctuation'
+        keyboardType="numbers-and-punctuation"
         placeholder="Enter duration"
         placeholderTextColor={styles.colors.grey}
       />
@@ -100,6 +148,20 @@ const AddActivityScreen = ({ navigation }) => {
         />
       )}
 
+      { (
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 16 }}>
+        <Text style={[styles.common.label, { color: textColor, marginLeft: 8 }]}>
+        This item is marked as special. Select the
+        checkbox if you would lke to approve it.
+          </Text>
+          <Checkbox
+            value={isSpecial}
+            onValueChange={() => setIsSpecial(!isSpecial)}
+            color={styles.colors.primary}
+          />
+        </View>
+      )}
+
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
         <PressableButton
           style={[styles.common.button, { backgroundColor: styles.colors.danger, flex: 1, marginRight: 8 }]}
@@ -109,7 +171,7 @@ const AddActivityScreen = ({ navigation }) => {
         </PressableButton>
         <PressableButton
           style={[styles.common.button, { backgroundColor: styles.colors.primary, flex: 1, marginLeft: 8 }]}
-          onPress={validateAndSave}
+          onPress={handleUpdate}
         >
           <Text style={[styles.common.buttonText, { color: styles.colors.lightText }]}>Save</Text>
         </PressableButton>
@@ -118,4 +180,4 @@ const AddActivityScreen = ({ navigation }) => {
   );
 };
 
-export default AddActivityScreen;
+export default EditActivityScreen;

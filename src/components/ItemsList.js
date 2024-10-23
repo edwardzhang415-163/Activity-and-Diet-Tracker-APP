@@ -1,17 +1,27 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
-import { useData } from '../context/DataContext';
+import { useData } from '../context/DataHelper';
 import { styles } from '../styles';
+import PressableButton from './PressableButton';
+import { Ionicons } from '@expo/vector-icons';
 
 const ItemsList = ({ type }) => {
+  const navigation = useNavigation();
   const { backgroundColor, textColor } = useTheme();
   const { activities, dietEntries } = useData();
 
   const data = type === 'activities' ? activities : dietEntries;
 
+  const handlePress = (item) => {
+    const screenName = type === 'activities' ? 'EditActivity' : 'EditDiet';
+    navigation.navigate(screenName, { item });
+  };
+
   const renderItem = ({ item }) => (
-    <View 
+    <PressableButton 
+      onPress={() => handlePress(item)}
       style={[
         styles.common.listItem, 
         { 
@@ -20,36 +30,56 @@ const ItemsList = ({ type }) => {
         }
       ]}
     >
-      <View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         {type === 'activities' ? (
           <>
             <Text style={[localStyles.title, { color: textColor }]}>
               {item.type}
             </Text>
-            <Text style={[localStyles.subtitle, { color: textColor }]}>
-              Duration: {item.duration} min
-            </Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center',flex: 1  }}>
+                {item.isSpecial && (
+                  <Ionicons 
+                    name="warning"
+                    size={24}
+                    color={styles.colors.primary}
+                    style={{ margin: 6 }} 
+                  /> 
+                )}
+                <Text style={[localStyles.subtitle, { color: textColor }]}>
+                  {new Date(item.date).toLocaleDateString()}
+                </Text>
+                <Text style={[localStyles.subtitle, { color: textColor, width : 80  }]}>
+                  {item.duration} min
+                </Text>
+              </View>
           </>
         ) : (
           <>
             <Text style={[localStyles.title, { color: textColor }]}>
               {item.description}
             </Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center',flex: 1  }}>
+            {item.isSpecial && (
+              <Ionicons 
+            name="warning"
+            size={24}
+            color={styles.colors.primary}
+            style={{ margin: 6 }} /> 
+            )}
             <Text style={[localStyles.subtitle, { color: textColor }]}>
-              Calories: {item.calories}
-            </Text>
-          </>
-        )}
-        <Text style={[localStyles.date, { color: textColor }]}>
           {new Date(item.date).toLocaleDateString()}
         </Text>
+            <Text style={[localStyles.subtitle, { color: textColor , width : 50 }]}>
+               {item.calories}
+            </Text>
+            </View>
+          </>
+        )}
       </View>
-      {item.isSpecial && (
-        <View style={localStyles.specialBadge}>
-          <Text style={localStyles.specialText}>Special</Text>
-        </View>
-      )}
-    </View>
+      
+      </View>
+    </PressableButton>
   );
 
   return (
@@ -66,15 +96,17 @@ const localStyles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '600',
+    marginRight: 8,
   },
   subtitle: {
-    fontSize: 14,
-    marginTop: 4,
-  },
-  date: {
-    fontSize: 12,
-    marginTop: 4,
-    opacity: 0.7,
+    fontSize: 15,
+    margin: 4,
+    borderWidth: 1, 
+    borderColor: 'grey', 
+    borderRadius: 4, 
+    padding: 4, 
+    width: 100,
+    textAlign: 'center'
   },
   specialBadge: {
     backgroundColor: styles.colors.warning,
