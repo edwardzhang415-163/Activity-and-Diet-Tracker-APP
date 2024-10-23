@@ -37,11 +37,13 @@ const AddDietEntryScreen = ({ navigation }) => {
     <View style={[styles.common.container, { backgroundColor }]}>
       <Text style={[styles.common.label, { color: textColor }]}>Description</Text>
       <TextInput
-        style={[styles.common.input, { color: textColor, borderColor: textColor }]}
+        style={[styles.common.input, { color: textColor, borderColor: textColor, height: 100 }]}
         value={description}
         onChangeText={setDescription}
         placeholder="Enter description"
         placeholderTextColor={styles.colors.grey}
+        multiline={true}
+        numberOfLines={4}
       />
 
       <Text style={[styles.common.label, { color: textColor }]}>Calories</Text>
