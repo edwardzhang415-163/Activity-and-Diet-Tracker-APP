@@ -15,8 +15,7 @@ const DietScreen = ({ navigation }) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <PressableButton
         onPress={() =>navigation.navigate('AddDietEntry')}
-        componentStyle={styles.colors.primary}
-        pressedStyle={styles.common.button}
+        style={styles.colors.primary}
       >
         <Ionicons 
           name="add"
